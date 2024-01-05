@@ -1,5 +1,4 @@
 import express from "express";
-import xss from 'xss';
 
 const app = express();
 

@@ -33,6 +33,31 @@ app.get('/users', async (request, res )=>{
     `)
 })
 
+// Handle the post request for temp conversion
+app.post('/convert', (req, res) => {
+    setTimeout(()=>{
+        const fahrenheit = parseFloat(req.body.fahrenheit);
+
+        const celsius = ( fahrenheit - 32) * (5/9);
+
+        res.send(`
+            <p>
+                ${fahrenheit} degrees Fahrenheit is equal to ${celsius.toFixed(2)} degrees celsius
+            </p>
+        `);
+    }, 2000)
+}) 
+
+let counter = 0;
+// Handle get request for polling example
+app.get("/poll", (req, res)=>{
+    counter++;
+
+    const data = { value: counter};
+
+    res.json(data);
+});
+
 //Start the server
 app.listen(3000, ()=>{
     console.log('Server listening on port 3000');

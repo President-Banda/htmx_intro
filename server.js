@@ -66,6 +66,47 @@ app.get("/get-temperature", (req, res)=>{
     res.send(currentTemperature.toFixed(1) + 'C');
 });
 
+
+const contacts = [
+    {name: 'John Doe', email:'john@example.com'},
+    {name: 'Bright Ngoxy', email:'bright@example.com'},
+    {name: 'Kelvin Kapuya', email:'kelz@example.com'},
+    {name: 'Richard Malombe', email:'richard@example.com'},
+    {name: 'Mungo Kimu', email:'mungo@example.com'},
+    {name: 'Chimwemwe Vin', email:'chimze@example.com'},
+    {name: 'Chinsisi Mollen', email:'chinsi@example.com'},
+];
+// Handle POSt request for user search
+app.post("/search", (req, res)=>{
+    const searchTerm = req.body.search.toLowerCase();
+
+    if(!searchTerm){
+        return res.send('<tr></tr>');
+    }
+
+    const searchResults = contacts.filter(contact => {
+        const name = contact.name.toLowerCase();
+        const email = contact.email.toLowerCase();
+
+        return name.includes(searchTerm) || email.includes(searchTerm);
+    
+    })
+
+    setTimeout(() => {
+        const searchResultHtml = searchResults.map( contact => `
+            <tr>
+                <td>
+                    <div className="my-4 p-2">${contact.name}</div>
+                    <div className="my-4 p-2">${contact.email}</div>
+                </td>
+            </tr>
+        `).join('')
+
+        res.send(searchResultHtml);
+    }, 1000);
+});
+
+
 //Start the server
 app.listen(3000, ()=>{
     console.log('Server listening on port 3000');
